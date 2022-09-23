@@ -1,7 +1,10 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,11 +23,17 @@ public class UserResource {
 
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable Integer id){
-        return userDaoService.findOne(id);
+        User user = userDaoService.findOne(id);
+        if (null == user){
+            throw new UserNotFoundException("id: " + id);
+        }
+        return user;
     }
 
     @PostMapping("/users")
-    public User createUser(@RequestBody User user){
-        return userDaoService.save(user);
+    public ResponseEntity<Object> createUser(@RequestBody User user){
+        User savedUser = userDaoService.save(user);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
