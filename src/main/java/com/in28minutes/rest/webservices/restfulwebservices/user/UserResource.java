@@ -22,4 +22,9 @@ public class UserResource {
     public User retrieveUser(@PathVariable Integer id){
         return userDaoService.findOne(id);
     }
+
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user){
+        return userDaoService.save(user);
+    }
 }
