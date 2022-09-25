@@ -1,12 +1,20 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class User {
 
     private Integer id;
+
+    @Size(min = 2)
+    @NotNull
     private String name;
+
+    @Past
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
