@@ -35,4 +35,14 @@ public class VersioningPersonController {
     public PersonV2 getPersonVersion2ByRequestHeader(){
         return new PersonV2(new Name("Sanjiv", "Katiyar"));
     }
+
+    @GetMapping(path = "/person", produces = "application/vnd.company.app-v1+json")
+    public PersonV1 getPersonVersion1ByMediaType(){
+        return new PersonV1("Sanjiv Katiyar");
+    }
+
+    @GetMapping(path = "/person", produces = "application/vnd.company.app-v2+json")
+    public PersonV2 getPersonVersion2ByMediaType(){
+        return new PersonV2(new Name("Sanjiv", "Katiyar"));
+    }
 }
