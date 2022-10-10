@@ -1,15 +1,18 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name="user_details")
@@ -27,6 +30,10 @@ public class User {
     @Past(message = "Birth date should be in the past")
     @JsonProperty("birth_date")
     private LocalDate birthDate;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public User() {
     }
@@ -59,6 +66,14 @@ public class User {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
